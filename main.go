@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	const allticket =50
+	
 	ticketnumber := 50
 	var firtName string
 	var lastName string
@@ -25,16 +25,16 @@ func main() {
 		fmt.Println("how mant tickets you want?")
 		fmt.Scan(&countOfTickets)
 
+		//check the inputs
+		validname:=len(firtName)>2&&len(lastName)>2
+		validemail:=strings.Contains(email,"@")
+		validCountOfTickets:=countOfTickets<ticketnumber
 
 		///// are we have enouf tickets?
-		ticketnumber=ticketnumber-countOfTickets
-		if ticketnumber<0{
-			println("we dont have enough tickets we")
-			break
-		}
-
-		fmt.Printf("%v %v  you booking %v of %v we will send varify email to %v\n", firtName, lastName, countOfTickets,allticket, email)
+	if validCountOfTickets&&validemail&&validname{
 		bookings = append(bookings, firtName+" "+lastName)
+		
+		fmt.Printf("%v %v  you booking %v tickets we will send varify email to %v \n we still have %v tickets \n", firtName, lastName, countOfTickets,email, ticketnumber,)
 
 		namees := []string{}
 		for _, name := range bookings {
@@ -46,6 +46,26 @@ func main() {
 		fmt.Println("================================================================")
 		fmt.Printf("list of booking names: %v\n", namees)
 
+	}else{
+
+		if !validemail{
+
+			fmt.Println("you email is not correct")
+		}
+		if !validname{
+			println("enter valid name")
+
+		}
+		if !validCountOfTickets{
+			
+			fmt.Printf("we dont have enough tickets we just have %v tickets",ticketnumber)
+		}
+
+
+
+
 	}
 
-}
+
+
+}}
