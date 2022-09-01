@@ -4,68 +4,112 @@ import (
 	"fmt"
 	"strings"
 )
+var reminingTicket uint= 50
+var bookings = []string{}
+var confransName="MAGICK"
 
 func main() {
 	
-	ticketnumber := 50
-	var firtName string
-	var lastName string
-	var email string
-	var countOfTickets int
-	var bookings = []string{}
+	
+
+
 	for {
+		//get grating
+		getgratin()
 		// inpuuut
-		fmt.Println("welcome")
-		fmt.Println("enter your first name")
-		fmt.Scan(&firtName)
-		fmt.Println("enter your lastname")
-		fmt.Scan(&lastName)
-		fmt.Println("enter your email")
-		fmt.Scan(&email)
-		fmt.Println("how mant tickets you want?")
-		fmt.Scan(&countOfTickets)
-
+		firtName, lastName,email,countOfTickets:= inputs()
 		//check the inputs
-		validname:=len(firtName)>2&&len(lastName)>2
-		validemail:=strings.Contains(email,"@")
-		validCountOfTickets:=countOfTickets<ticketnumber
-
-		///// are we have enouf tickets?
-	if validCountOfTickets&&validemail&&validname{
-		bookings = append(bookings, firtName+" "+lastName)
+		validname,validemail,validCountOfTickets:= checkinput(firtName, lastName,email,countOfTickets)
+		//add to list
+		booking(validCountOfTickets , validemail ,validname ,firtName ,lastName ,email,countOfTickets)
 		
-		fmt.Printf("%v %v  you booking %v tickets we will send varify email to %v \n we still have %v tickets \n", firtName, lastName, countOfTickets,email, ticketnumber,)
-
-		namees := []string{}
-		for _, name := range bookings {
-			var n = strings.Fields(name)
-			namees = append(namees, n[0])
-			break
+	//print first name
+		nameList()
 
 		}
-		fmt.Println("================================================================")
-		fmt.Printf("list of booking names: %v\n", namees)
-
-	}else{
-
-		if !validemail{
-
-			fmt.Println("you email is not correct")
-		}
-		if !validname{
-			println("enter valid name")
-
-		}
-		if !validCountOfTickets{
-			
-			fmt.Printf("we dont have enough tickets we just have %v tickets",ticketnumber)
-		}
-
-
-
+		
 
 	}
 
 
 
+	
+
+
+
+
+
+
+func getgratin(){
+	fmt.Printf("welcome %v  confrance you can booking your tickets from this platform\n",confransName)
+	fmt.Printf("we have %v tickets\n",reminingTicket)
+	fmt.Println("=====================")
+}
+
+func inputs()(string, string,string,uint){
+	var firtName string
+	var lastName string
+	var email string
+	var countOfTickets uint
+
+	fmt.Println("enter your first name")
+	fmt.Scan(&firtName)
+	fmt.Println("enter your lastname")
+	fmt.Scan(&lastName)
+	fmt.Println("enter your email")
+	fmt.Scan(&email)
+	fmt.Println("how many tickets you want?")
+	fmt.Scan(&countOfTickets)
+
+	return firtName,lastName,email,countOfTickets
+
+}
+
+func checkinput(firtName string, lastName string, email string, countOfTickets uint)(bool,bool,bool){
+
+	validname:=len(firtName)>2&&len(lastName)>2
+	validemail:=strings.Contains(email,"@")
+	validCountOfTickets:=countOfTickets<reminingTicket
+
+
+	if !validemail{
+
+		fmt.Println("you email is not correct")
+		fmt.Println("=====================")
+	}
+	if !validname{
+		println("enter valid name")
+		fmt.Println("=====================")
+
+	}
+	if !validCountOfTickets{
+		
+		fmt.Printf("we dont have enough tickets we just have %v tickets\n",reminingTicket)
+		fmt.Println("=====================")
+	}
+	return validname,validemail,validCountOfTickets
+
+}
+
+func booking(validCountOfTickets bool, validemail bool,validname bool,firtName string,lastName string,email string,countOfTickets uint){
+	if validCountOfTickets&&validemail&&validname{
+		bookings = append(bookings, firtName+" "+lastName)
+		reminingTicket=reminingTicket-countOfTickets
+		fmt.Printf("%v %v  you booking %v tickets we will send varify email to %v \n we still have %v tickets \n", firtName, lastName, countOfTickets,email, reminingTicket,)
+		fmt.Println("=====================")
 }}
+
+func nameList(){
+	namees := []string{}
+	for _, name := range bookings {
+		n := strings.Fields(name)
+		namees = append(namees, n[0])
+		}
+		
+		fmt.Printf("who pepele booking:%v\n",namees)
+	}
+
+
+
+
+
